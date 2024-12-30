@@ -1,0 +1,14 @@
+{
+  "name": "contact-list-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tests.spec.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2"
+  }
+}
