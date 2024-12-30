@@ -1,8 +1,10 @@
-const {test, expect} = require('playwright/test');
+const {test, expect} = require('@playwright/test');
+const { HomePage } = require('../pages/homepage');
 
 test.beforeEach('Run before each test', async({page}) => {
     // console.log('Running before all tests...!')
-    await page.goto('https://thinking-tester-contact-list.herokuapp.com/');
+    const homepage = new HomePage(page);
+    await homepage.goto();
 })
 
 test('Check labels in the home page', async({page}) => {
