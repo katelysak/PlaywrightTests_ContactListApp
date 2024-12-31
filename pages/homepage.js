@@ -25,14 +25,26 @@ exports.HomePage = class HomePage {
         this.loginLabel = page.locator('//*[(text()="Log In:")]')
         this.signUpText = page.locator('//*[(text()="Not yet a user? Click here to sign up!")]')
         this.footerText = page.locator('//footer/p')
-        // this.emptyFiendsValidation = page.locator('//span[normalize-space(text())="User validation failed: firstName: Path `firstName` is required., lastName: Path `lastName` is required., email: Email is invalid, password: Path `password` is required."]')
-    }//span[contains(normalize-space(.), "User validation failed: firstName: Path `firstName` is required., lastName: Path `lastName` is required., email: Email is invalid, password: Path `password` is required.")
-
-    // async goto(url) {
-    //     await this.page.goto(url)
-    // }
+        this.contactsText = page.locator('//*[(text()="Click on any contact to view the Contact Details")]')
+        this.addContactButton = page.locator('#add-contact')
+        this.birthdayField = page.locator('#birthdate')
+        this.phoneField = page.locator('#phone')
+        this.addressField1 = page.locator('#street1')
+        this.addressField2 = page.locator('#street2')
+        this.cityField = page.locator('#city')
+        this.provinceField = page.locator('#stateProvince')
+        this.postalCodeField = page.locator('#postalCode')
+        this.countryField = page.locator('#country')
+        this.lastTableRecord = page.locator('//table/tr[last()]')
+        this.deleteButton = page.locator('#delete')
+    }
 
     async labelIsVisible(param1) {
         await expect(this.page.getByText(param1)).toBeVisible();
+    }
+
+    async footerCheck() {
+        await expect(this.page.locator('//footer/p')).toBeVisible();
+        await expect(this.page.locator('img')).toHaveAttribute('src' , '/img/thinkingTesterLogo.png');
     }
 }
