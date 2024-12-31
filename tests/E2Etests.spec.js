@@ -2,6 +2,7 @@ const {test, expect} = require('@playwright/test');
 const { HomePage } = require('../pages/homepage');
 const { url } = require('inspector');
 const { homedir } = require('os');
+const { pathToFileURL } = require('url');
 
 test.beforeEach('Run before each test', async({page}) => {
     const homepage = new HomePage(page);
@@ -12,11 +13,11 @@ test('Check labels in the home page', async({page}) => {
     const homepage = new HomePage(page);
 
     await expect(homepage.headerText).toBeVisible();
-    await expect(page.getByText('Welcome! This application is')).toBeVisible();
-    await expect(page.getByText('The API documentation can be found')).toBeVisible();
-    await expect(page.getByText('Log In:')).toBeVisible();
-    await expect(page.getByText('Not yet a user? Click here to')).toBeVisible();
-    await expect(page.getByText('Created by Kristin Jackvony,')).toBeVisible();
+    await expect(homepage.welcomeText).toBeVisible();
+    await expect(homepage.apiLinkText).toBeVisible();
+    await expect(homepage.loginLabel).toBeVisible();
+    await expect(homepage.signUpText).toBeVisible();
+    await expect(homepage.footerText).toBeVisible();
 })
 
 test('Correct logo is displayed', async({page}) => {
@@ -26,18 +27,20 @@ test('Correct logo is displayed', async({page}) => {
 })
 
 test('Link to the API Documentation is correct and clickable', async({page}) => {
+    const homepage = new HomePage(page);
 
-    await expect(page.getByRole('link', { name: 'here' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'here' })).toHaveAttribute('href', process.env.API_DOCUMENTATION_URL);
+    await expect(homepage.linkToApiDocument).toBeVisible();
+    await expect(homepage.linkToApiDocument).toHaveAttribute('href', process.env.API_DOCUMENTATION_URL);
 
-    await page.getByRole('link', { name: 'here' }).click();
+    homepage.linkToApiDocument.click();
     await expect(page).toHaveURL(process.env.API_DOCUMENTATION_URL)
 })
 
 test('Check validation for empty credentials in the login page', async({page}) => {
+    const homepage = new HomePage(page);
 
-    await page.getByRole('button', { name: 'Submit' }).click();
-    await expect(page.getByText('Incorrect username or password')).toBeVisible();
+    homepage.submitButton.click();
+    await expect(homepage.error).toBeVisible();
 })
 
 test('Check validation for not valid credentials in the login page', async({page}) => {
@@ -69,11 +72,12 @@ test('Check validation for not valid credentials in the login page', async({page
 // })
 
 test('Validation for empty fields in the sign up page', async({page}) => {
+    const homepage = new HomePage(page);
 
-    await page.getByRole('button', { name: 'Sign up' }).click();
-    await page.getByRole('button', { name: 'Submit' }).click();
+    homepage.signUpButton.click();
+    homepage.submitButton.click();
 
-    await expect(page.getByText('User validation failed: firstName: Path `firstName` is required., lastName: Path `lastName` is required., email: Email is invalid, password: Path `password` is required.')).toBeVisible();
+    await expect(homepage.error).toBeVisible();
 })
 
 test('Validation for the already signed up user', async({page}) => {
