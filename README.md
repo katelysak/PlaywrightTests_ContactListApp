@@ -1,4 +1,4 @@
-# PlaywrightTests_ContactListApp
+# 🎭 PlaywrightTests_ContactListApp
 
 ContactListApp is a project built using Playwright and JavaScript to automate the testing of a Contact List application. This project demonstrates basic end-to-end testing workflows, ensuring the application's core functionality performs as expected.
 
