@@ -25,18 +25,8 @@ exports.HomePage = class HomePage {
         this.loginLabel = page.locator('//*[(text()="Log In:")]')
         this.signUpText = page.locator('//*[(text()="Not yet a user? Click here to sign up!")]')
         this.footerText = page.locator('//footer/p')
-        this.contactsText = page.locator('//*[(text()="Click on any contact to view the Contact Details")]')
-        this.addContactButton = page.locator('#add-contact')
-        this.birthdayField = page.locator('#birthdate')
-        this.phoneField = page.locator('#phone')
-        this.addressField1 = page.locator('#street1')
-        this.addressField2 = page.locator('#street2')
-        this.cityField = page.locator('#city')
-        this.provinceField = page.locator('#stateProvince')
-        this.postalCodeField = page.locator('#postalCode')
-        this.countryField = page.locator('#country')
-        this.lastTableRecord = page.locator('//table/tr[last()]')
-        this.deleteButton = page.locator('#delete')
+
+
     }
 
     async labelIsVisible(param1) {

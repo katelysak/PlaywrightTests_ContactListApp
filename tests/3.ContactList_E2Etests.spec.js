@@ -1,5 +1,6 @@
 const {test, expect} = require('@playwright/test');
 const { HomePage } = require('../pages/homepage');
+const { ContactsPage } = require('../pages/contactspage');
 const { url } = require('inspector');
 const { homedir } = require('os');
 const { pathToFileURL } = require('url');
@@ -16,44 +17,49 @@ test.beforeEach('Run before each test', async({page}) => {
 })
 
 test('Check labels and buttons displayed in the contacts page', async({page}) => {
-    const homepage = new HomePage(page);
+    const contactspage = new ContactsPage(page);
 
-    await expect(homepage.headerText).toHaveText('Contact List');
-    await expect(homepage.contactsText).toBeVisible();
+    await expect(contactspage.headerText).toHaveText('Contact List');
+    await expect(contactspage.contactsText).toBeVisible();
 })
 
 test('Add new contact', async({page}) => {
-    const homepage = new HomePage(page);
+    const contactspage = new ContactsPage(page);
 
-    await homepage.addContactButton.click();
+    await contactspage.addContactButton.click();
 
-    await homepage.firstName.fill('Mike');
-    await homepage.lastName.fill('Adams');
-    await homepage.birthdayField.fill('1986-01-27');
-    await homepage.emailField.fill('test@gmail.com');
-    await homepage.phoneField.fill('4376443271');
-    await homepage.addressField1.fill('App 309');
-    await homepage.addressField2.fill('34 Green St.');
-    await homepage.cityField.fill('Toronto');
-    await homepage.provinceField.fill('Ontario');
-    await homepage.postalCodeField.fill('M3P 5B4');
-    await homepage.countryField.fill('Canada');
+    await contactspage.firstName.fill('Mike');
+    await contactspage.lastName.fill('Adams');
+    await contactspage.birthdayField.fill('1986-01-27');
+    await contactspage.emailField.fill('test@gmail.com');
+    await contactspage.phoneField.fill('4376443271');
+    await contactspage.addressField1.fill('App 309');
+    await contactspage.addressField2.fill('34 Green St.');
+    await contactspage.cityField.fill('Toronto');
+    await contactspage.provinceField.fill('Ontario');
+    await contactspage.postalCodeField.fill('M3P 5B4');
+    await contactspage.countryField.fill('Canada');
 
-    await homepage.submitButton.click();
+    await contactspage.submitButton.click();
 
     // fix later
     await expect(page.getByRole('cell', { name: 'Mike Adams' }).first()).toHaveText('Mike Adams')
 })
 
-test('Delete contact', async({page}) => {
-    const homepage = new HomePage(page);
+test('Delete contact', async ({ page }) => {
+    const contactspage = new ContactsPage(page);
 
-    await homepage.lastTableRecord.click();
-    await homepage.deleteButton.click();
-})
+    // Set up the dialog event listener before triggering the dialog
+    await contactspage.confirmAlert();
+
+    await contactspage.lastTableRecord.click();
+    await contactspage.deleteButton.click();
+
+    await expect(page).toHaveURL(process.env.CONTACTS_URL)
+});
 
 test('Correct footer logo and text are displayed', async({page}) => {
-    const homepage = new HomePage(page);
+    const contactspage = new ContactsPage(page);
 
-    await homepage.footerCheck();
+    await contactspage.footerCheck();
 })
