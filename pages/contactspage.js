@@ -26,6 +26,7 @@ exports.ContactsPage = class ContactsPage {
         this.headerText = page.locator('//h1');
         this.lastTableRecord = page.locator('//table/tr[last()]')
         this.deleteButton = page.locator('#delete')
+        this.logoutButton = page.locator('#logout')
 
     }
 

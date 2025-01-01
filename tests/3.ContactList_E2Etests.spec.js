@@ -27,6 +27,7 @@ test('Add new contact', async({page}) => {
     const contactspage = new ContactsPage(page);
 
     await contactspage.addContactButton.click();
+    await expect(page).toHaveURL(process.env.ADD_CONTACT_URL)
 
     await contactspage.firstName.fill('Mike');
     await contactspage.lastName.fill('Adams');
