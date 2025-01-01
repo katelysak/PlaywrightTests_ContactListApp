@@ -27,7 +27,8 @@ exports.ContactsPage = class ContactsPage {
         this.lastTableRecord = page.locator('//table/tr[last()]')
         this.deleteButton = page.locator('#delete')
         this.logoutButton = page.locator('#logout')
-
+        this.editContactButton = page.locator('#edit-contact')
+        this.returnButton = page.locator('#return')
     }
 
     async footerCheck() {

@@ -47,6 +47,44 @@ test('Add new contact', async({page}) => {
     await expect(page.getByRole('cell', { name: 'Mike Adams' }).first()).toHaveText('Mike Adams')
 })
 
+test('Update contact', async({page}) => {
+    const contactspage = new ContactsPage(page);
+
+    await contactspage.lastTableRecord.click();
+    await contactspage.editContactButton.click()
+
+    await expect(page).toHaveURL(process.env.EDIT_CONTACT_URL)
+
+    await contactspage.firstName.click();
+    await contactspage.firstName.fill('Michael');
+    await contactspage.lastName.click();
+    await contactspage.lastName.fill('Adamson');
+    await contactspage.birthdayField.click();
+    await contactspage.birthdayField.fill('1987-01-28');
+    await contactspage.emailField.click();
+    await contactspage.emailField.fill('test2@gmail.com');
+    await contactspage.phoneField.click();
+    await contactspage.phoneField.fill('4371111111');
+    await contactspage.addressField1.click();
+    await contactspage.addressField1.fill('App 3099');
+    await contactspage.addressField2.click();
+    await contactspage.addressField2.fill('344 Green St.');
+    await contactspage.cityField.click();
+    await contactspage.cityField.fill('London');
+    await contactspage.provinceField.click();
+    await contactspage.provinceField.fill('');
+    await contactspage.postalCodeField.click();
+    await contactspage.postalCodeField.fill('HA3 0JA');
+    await contactspage.countryField.click();
+    await contactspage.countryField.fill('United Kingdom');
+
+    await contactspage.submitButton.click();
+
+    await contactspage.returnButton.click();
+    // // fix later
+    await expect(page.getByRole('cell', { name: 'Michael Adamson' }).first()).toHaveText('Michael Adamson')
+})
+
 test('Delete contact', async ({ page }) => {
     const contactspage = new ContactsPage(page);
 
